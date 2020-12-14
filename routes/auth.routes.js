@@ -17,7 +17,6 @@ router.post(
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), message: 'Wrong data.' });
-
             const { email, password } = req.body;
             const candidate = await User.findOne({ email });
 
@@ -30,7 +29,7 @@ router.post(
             res.status(200).json({ message: 'User registered.' })
 
         } catch (e) {
-            res.status(500).json({ message: 'Something wrong, try again.' })
+            res.status(500).json({ message: 'Something wrong, try again.' + e.message })
         }
     });
 
@@ -42,18 +41,24 @@ router.post(
     ],
     async (req, res) => {
         try {
+
             const errors = validationResult(req);
-            if (!errors.isEmpty) return res.status(400).json({ errors: errors.array(), message: 'Wrong data.' })
+            if (!errors.isEmpty) {
+                return res.status(400).json({ errors: errors.array(), message: 'Wrong data.' })
+            }
+
 
             const { email, password } = req.body;
 
-            const user = User.findOne({ email });
-            if (!user)
+            const user = await User.findOne({ email });
+            if (!user) {
                 res.status(400).json({ message: 'This user does not exist.' });
+            }
 
             const comparePasswords = await bcrypt.compare(password, user.password);
-            if (!comparePasswords)
+            if (!comparePasswords) {
                 res.status(400).json({ message: 'Invalid password.' }); //or email
+            }
             const token = jwt.sign({ userId: user.id }, config.get('jwtSecret'), { expiresIn: '1h' });
             res.json({ token, id: user.id })
         } catch (e) {

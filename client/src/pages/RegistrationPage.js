@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles';
 import { useHttp } from '../hooks/http.hook';
+import {useEffect} from 'react';
+import { useMessage } from '../hooks/message.hook';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -26,15 +28,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Registration = () => {
-    const { request } = useHttp();
+    const { loading, error, request, clearError } = useHttp();
     const [formData, setFormData] = useState();
+    const message = useMessage();
 
+    
+    useEffect(() => {
+        message(error);
+        clearError();
+    }, [error, message, clearError]);
+    
     const registrationHandle = async () => {
         try {
-            console.log(formData);
-
             const data = await request('/api/auth/registrations', 'POST', {...formData})
-            console.log(data);
+            message(data.message)
         } catch (e) { }
     }
     const onChangeHandle = e => setFormData({ ...formData, [e.target.name]: e.target.value })
