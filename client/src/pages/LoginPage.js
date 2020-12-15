@@ -9,6 +9,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useHttp } from '../hooks/http.hook';
 import { useState, useEffect } from 'react';
 import { useMessage } from '../hooks/message.hook';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../actions'
+import { useAuth } from '../hooks/auth.hook';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,23 +31,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = () => {
+const Login = ({curentUser, makeLogin}) => {
     const classes = useStyles();
-    const { loading, error, request, clearError } = useHttp();
+    const { error, request, clearError } = useHttp();
     const [formData, setFormData] = useState({});
     const message = useMessage();
-
     useEffect(() => {
         message(error);
         clearError();
     }, [error, message, clearError]);
-
+    
     const onChangeHandler = e => setFormData({ ...formData, [e.target.name]: e.target.value })
-
+    
     const LoginHandle = async () => {
         try {
             const data = await request('api/auth/login', 'POST', { ...formData })
-            console.log(data)
+            makeLogin({...data});
+            curentUser.login(data.token, data.id)
         } catch (e) {
 
         }
@@ -97,4 +101,16 @@ const Login = () => {
         </Container>
     );
 }
-export default Login;
+
+const mapStateToProps = (state)=>{
+    return {
+        curentUser: state.curentUser
+    }
+}
+const mapDispatchToProps = (dispatch)=>{
+    const {makeLogin} = bindActionCreators(actions, dispatch)
+    return {
+        makeLogin: makeLogin
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles';
 import { useHttp } from '../hooks/http.hook';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import { useMessage } from '../hooks/message.hook';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,19 +28,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Registration = () => {
-    const { loading, error, request, clearError } = useHttp();
+    const { error, request, clearError } = useHttp();
     const [formData, setFormData] = useState();
     const message = useMessage();
 
-    
+
     useEffect(() => {
         message(error);
         clearError();
     }, [error, message, clearError]);
-    
+
     const registrationHandle = async () => {
         try {
-            const data = await request('/api/auth/registrations', 'POST', {...formData})
+            const data = await request('/api/auth/registrations', 'POST', { ...formData })
             message(data.message)
         } catch (e) { }
     }
@@ -63,7 +63,7 @@ const Registration = () => {
                         label="Name"
                         name="name"
                         autoFocus
-                        // onChange={onChangeHandle}
+                    // onChange={onChangeHandle}
                     />
                     <TextField
                         variant="outlined"
@@ -94,7 +94,7 @@ const Registration = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                        onClick={ registrationHandle }
+                        onClick={registrationHandle}
                     >
                         Sign Up
                 </Button>
