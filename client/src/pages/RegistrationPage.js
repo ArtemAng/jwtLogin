@@ -38,13 +38,13 @@ const Registration = () => {
         clearError();
     }, [error, message, clearError]);
 
-    const registrationHandle = async () => {
+    const registrationHandle = useCallback(async () => {
         try {
             console.log({ ...formData });
             const data = await request('/api/auth/registrations', 'POST', { ...formData })
             message(data.message)
         } catch (e) { }
-    }
+    }, [message, formData, request])
     const onChangeHandle = e => setFormData({ ...formData, [e.target.name]: e.target.value })
     const classes = useStyles();
     return (

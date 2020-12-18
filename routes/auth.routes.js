@@ -63,7 +63,7 @@ router.post('/registrations',
         res.status(201).json({message: 'User was created'})
 
     } catch(e) {
-        res.status(500).json({message: 'Something went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again' + e.message} )
     }
 });
 
