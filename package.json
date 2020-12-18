@@ -4,6 +4,9 @@
   "description": "web app with node + react",
   "main": "app.js",
   "scripts": {
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "start": "node app.js",
     "serve": "nodemon app.js",
     "client": "npm run start --prefix client",

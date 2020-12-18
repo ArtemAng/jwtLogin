@@ -3,15 +3,15 @@ const config = require('config');
 const mongoose = require('mongoose')
 
 const app = express();
+const PORT = process.env.PORT || 8888;
 
 app.use(express.json({ extended: true }))
 app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api/usersList', require('./routes/users.routes'))
-const PORT = config.get('port') || 8888;
 
 const start = async () => {
     try {
-        await mongoose.connect(config.get('mongoUri'), {
+        await mongoose.connect(process.env.MONGODB_URI || config.get('mongoUri'), {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
@@ -24,5 +24,7 @@ const start = async () => {
         process.exit(1);
     }
 }
-
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('./client/build'))
+}
 start();
