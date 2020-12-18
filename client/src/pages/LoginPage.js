@@ -12,7 +12,6 @@ import { useMessage } from '../hooks/message.hook';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions'
-import { useAuth } from '../hooks/auth.hook';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -46,7 +45,7 @@ const Login = ({curentUser, makeLogin}) => {
     const LoginHandle = async () => {
         try {
             const data = await request('api/auth/login', 'POST', { ...formData })
-            makeLogin({...data});
+            await makeLogin({...data});
             curentUser.login(data.token, data.id)
         } catch (e) {
 

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom'
-import { useAuth } from './hooks/auth.hook';
 import { useRoutes } from './routes';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -15,7 +14,6 @@ function App({ curentUser, setAutentificated, makeLogin }) {
       makeLogin(data);
     }
   }, [makeLogin]);
-  console.log(!!curentUser.token);
   const isAuthentificated = !!curentUser.token;
   const routes = useRoutes(isAuthentificated);
   return (

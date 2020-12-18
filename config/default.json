@@ -1,5 +1,7 @@
 {
     "port": 8888,
-    "mongoUri": "mongodb+srv://Artem:aaa123@cluster0.qj5z6.mongodb.net/app?retryWrites=true&w=majority",
-    "jwtSecret": "itra"
+    "mongoUri": "mongodb+srv://aaa:aaa123@cluster0.nhuv4.mongodb.net/users?retryWrites=true&w=majority",
+    
+    "jwtSecret": "itra",
+    "baseUrl": "http://localhost:8881"
 }

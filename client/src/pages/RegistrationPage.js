@@ -40,6 +40,7 @@ const Registration = () => {
 
     const registrationHandle = async () => {
         try {
+            console.log({ ...formData });
             const data = await request('/api/auth/registrations', 'POST', { ...formData })
             message(data.message)
         } catch (e) { }
@@ -63,7 +64,7 @@ const Registration = () => {
                         label="Name"
                         name="name"
                         autoFocus
-                    // onChange={onChangeHandle}
+                        onChange={onChangeHandle}
                     />
                     <TextField
                         variant="outlined"
