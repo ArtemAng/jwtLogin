@@ -25,7 +25,7 @@ router.post(
             const hashedPassword = await bcrypt.hash(password, 12);
             const date = new Date().toString().split(' ');
             const user = new User({ email, password: hashedPassword, name, status: false, isBlocked: false, regDate: `${date[1]}/${date[2]}/${date[3]}`, lastLoginDate: `--/--/--` });
-            await user.save();
+            user.save();
            
             res.status(200).json({ message: 'User registered.' })
 
