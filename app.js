@@ -10,7 +10,7 @@ app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api/usersList', require('./routes/users.routes'))
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('./client/build'))
+    app.use(express.static('client/build'))
 }
 
 const start = async () => {
