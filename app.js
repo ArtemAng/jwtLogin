@@ -48,9 +48,12 @@ app.use('/api/usersList', require('./routes/users.routes'))
 
 mongoose.connect('mongodb+srv://aaa:aaa123@cluster0.nhuv4.mongodb.net/users?retryWrites=true&w=majority', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+    useUnifiedTopology: true
 });
+
+mongoose.connection.on('connected', ()=>{
+    console.log('aaaaaaaaaaaaaa');
+})
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
