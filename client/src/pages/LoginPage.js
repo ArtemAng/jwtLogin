@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHttp } from '../hooks/http.hook';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useMessage } from '../hooks/message.hook';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -42,7 +42,7 @@ const Login = ({curentUser, makeLogin}) => {
     
     const onChangeHandler = e => setFormData({ ...formData, [e.target.name]: e.target.value })
     
-    const LoginHandle = async () => {
+    const LoginHandle = useCallback(async () => {
         try {
             const data = await request('api/auth/login', 'POST', { ...formData })
             await makeLogin({...data});
@@ -50,7 +50,7 @@ const Login = ({curentUser, makeLogin}) => {
         } catch (e) {
 
         }
-    }
+    }, [makeLogin, request])
 
     return (
         <Container component="main" maxWidth="xs">
