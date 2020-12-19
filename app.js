@@ -23,11 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/*', function(req, res) {
-    res.sendFile('./client/bild/index.html', function(err) {
-      if (err) {
-        res.status(500).send(err)
-      }
-    })
+    res.redirect('..')
   })
 
 app.listen(PORT, () => console.log('App has been started'));
