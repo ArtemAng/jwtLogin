@@ -60,7 +60,7 @@ const AdminPage = ({ makeLogout, email, token, setUsersList, users, usersMails, 
         }
         catch (e) {
         }
-    }, [request, makeLogout, email, makeLogout]);
+    }, [request, makeLogout, token]);
 
     const getUsers = useCallback(async () => {
         try {
@@ -70,7 +70,7 @@ const AdminPage = ({ makeLogout, email, token, setUsersList, users, usersMails, 
         } catch (e) {
             await switchOnline();
         }
-    }, [token, request, setUsersList, makeLogout]);
+    }, [token, request, setUsersList, switchOnline]);
 
 
     const blockUserHandle = useCallback(async () => {
@@ -81,7 +81,7 @@ const AdminPage = ({ makeLogout, email, token, setUsersList, users, usersMails, 
         catch (e) {
             await switchOnline();
         }
-    }, [request, setUsersList, usersMails, token, makeLogout])
+    }, [request, setUsersList, usersMails, token, switchOnline])
 
     const unlockUserHandle = useCallback(async () => {
         try {
@@ -101,7 +101,7 @@ const AdminPage = ({ makeLogout, email, token, setUsersList, users, usersMails, 
         } catch (e) {
             await switchOnline();
         }
-    }, [request, setUsersList, usersMails, token])
+    }, [request, setUsersList, usersMails, token, switchOnline])
 
     useEffect(() => {
         console.log(JSON.parse(localStorage.getItem('userData')));

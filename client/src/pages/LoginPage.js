@@ -44,13 +44,14 @@ const Login = ({curentUser, makeLogin}) => {
     
     const LoginHandle = useCallback(async () => {
         try {
+            await console.log({...formData})
             const data = await request('api/auth/login', 'POST', { ...formData })
             await makeLogin({...data});
             curentUser.login(data.token, data.id)
         } catch (e) {
 
         }
-    }, [makeLogin, request])
+    }, [makeLogin, request, formData])
 
     return (
         <Container component="main" maxWidth="xs">
